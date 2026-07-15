@@ -16,19 +16,6 @@
       "contentLanguage": ["en", "bn"]
     },
     {
-      "id": "discovery",
-      "name": "DFlix 🇧🇩",
-      "description": "High-speed BDIX Discovery FTP streams for movies and TV shows",
-      "version": "1.0.0",
-      "author": "Nuvio Team",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/discovery.js",
-      "enabled": true,
-      "formats": ["mp4", "mkv"],
-      "logo": "https://i.postimg.cc/TwYK26jn/vegamovies.png",
-      "contentLanguage": ["en", "bn"]
-    },
-    {
       "id": "dhakaflix",
       "name": "Dhakaflix 🇧🇩",
       "description": "High-speed BDIX Dhakaflix streams for movies and TV shows",
@@ -36,6 +23,19 @@
       "author": "Nuvio Team",
       "supportedTypes": ["movie", "tv"],
       "filename": "providers/dhakaflix.js",
+      "enabled": true,
+      "formats": ["mp4", "mkv"],
+      "logo": "https://i.postimg.cc/TwYK26jn/vegamovies.png",
+      "contentLanguage": ["en", "bn"]
+    },
+    {
+      "id": "discovery",
+      "name": "DFlix 🇧🇩",
+      "description": "High-speed BDIX Discovery FTP streams for movies and TV shows",
+      "version": "1.0.0",
+      "author": "Nuvio Team",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/discovery.js",
       "enabled": true,
       "formats": ["mp4", "mkv"],
       "logo": "https://i.postimg.cc/TwYK26jn/vegamovies.png",
