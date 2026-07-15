@@ -11,7 +11,7 @@ Nuvio scrapers are fully managed through the `manifest.json` configuration index
 ### Option 1: Direct Remote Installation
 Input the raw URL of the repository's `manifest.json` directly into your Nuvio App's provider settings panel:
 ```text
-https://raw.githubusercontent.com/<YOUR_GITHUB_USERNAME>/<YOUR_REPO_NAME>/main/manifest.json
+https://raw.githubusercontent.com/rubayetbd/Zubflix/main/manifest.json
 ```
 
 ### Option 2: Self-Hosting Configuration
