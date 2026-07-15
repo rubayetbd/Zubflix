@@ -1,19 +1,32 @@
 {
-  "name": "Zubflix",
+  "name": "Zubflix-TV",
   "version": "1.0.0",
   "scrapers": [
     {
-      "id": "zubflix",
-      "name": "Zubflix",
+      "id": "movielinkbd",
+      "name": "MovieLinkBD",
       "description": "Fast cloud drives and watch mirrors from MovieLinkBD",
       "version": "1.0.0",
-      "author": "Rubayet",
+      "author": "Nuvio Team",
       "supportedTypes": ["movie", "tv"],
       "filename": "providers/movielinkbd.js",
       "enabled": true,
       "formats": ["mp4", "mkv", "m3u8"],
       "logo": "https://i.postimg.cc/mryRTf0R/hdhub4u.png",
       "contentLanguage": ["en", "bn"]
+    },
+    {
+      "id": "4khdhub",
+      "name": "4KHDHub",
+      "description": "4KHDHub direct links",
+      "version": "1.0.0",
+      "author": "Nuvio Team",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/4khdhub.js",
+      "enabled": true,
+      "formats": ["mp4", "m3u8"],
+      "logo": "https://i.postimg.cc/DZpW6Xfb/4khdhub.png",
+      "contentLanguage": ["en"]
     }
   ]
 }
