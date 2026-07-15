@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "scrapers": [
     {
-      "id": "movielinkbd",
-      "name": "MovieLinkBD",
+      "id": "zubflix",
+      "name": "Zubflix",
       "description": "Fast cloud drives and watch mirrors from MovieLinkBD",
       "version": "1.0.0",
-      "author": "Nuvio Team",
+      "author": "Rubayet",
       "supportedTypes": ["movie", "tv"],
       "filename": "providers/movielinkbd.js",
       "enabled": true,
