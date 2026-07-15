@@ -184,6 +184,46 @@ function buildStream(fileName, url, quality, meta) {
   };
 }
 
+function searchSubfolder(query, server, folderHref) {
+  dbg("Searching Dhakaflix subfolder:", folderHref, "for query:", query);
+  var searchUrl = server.url + "/" + server.name + "/";
+  var payload = {
+    action: "get",
+    search: {
+      href: folderHref,
+      pattern: query,
+      ignorecase: true
+    }
+  };
+
+  return fetch(searchUrl, {
+    method: "POST",
+    headers: assign(DEFAULT_HEADERS, {
+      "Content-Type": "application/json"
+    }),
+    body: JSON.stringify(payload)
+  }).then(function(res) {
+    if (!res.ok) {
+      throw new Error("Dhakaflix subfolder search failed with HTTP " + res.status);
+    }
+    return res.json();
+  }).then(function(json) {
+    var searchResults = json.search || [];
+    dbg("Found", searchResults.length, "subfolder search hits for query:", query);
+    return searchResults.map(function(item) {
+      var href = item.href || "";
+      return {
+        href: href,
+        name: getNameFromPath(href),
+        fullUrl: server.url + href
+      };
+    });
+  }).catch(function(err) {
+    dbg("searchSubfolder error:", err.message);
+    return [];
+  });
+}
+
 function searchServer(query, server) {
   dbg("Searching Dhakaflix server:", server.name, "for query:", query);
   var searchUrl = server.url + "/" + server.name + "/";
@@ -226,7 +266,7 @@ function searchServer(query, server) {
 
 function findMovies(results, meta) {
   var filtered = results.filter(function(item) {
-    return isFile(item.href) && titlesMatch(item.name, meta.title);
+    return isFile(item.href) && (titlesMatch(item.name, meta.title) || titlesMatch(item.href, meta.title));
   });
   
   return filtered.map(function(item) {
@@ -235,9 +275,12 @@ function findMovies(results, meta) {
   });
 }
 
-function findSeries(results, meta, s, e) {
+function findSeries(results, meta, s, e, isSubfolderSearch) {
   var filtered = results.filter(function(item) {
-    if (!isFile(item.href) || !titlesMatch(item.name, meta.title)) {
+    if (!isFile(item.href)) {
+      return false;
+    }
+    if (!isSubfolderSearch && !titlesMatch(item.name, meta.title) && !titlesMatch(item.href, meta.title)) {
       return false;
     }
     var se = extractSeasonEpisode(item.name);
@@ -250,8 +293,8 @@ function findSeries(results, meta, s, e) {
   });
 }
 
-function getStreams(tmdbId, mediaType, season, episode) {
-  dbg("Starting Dhakaflix streams fetching for TMDB ID:", tmdbId, "| MediaType:", mediaType);
+function getStreams(tmdbId, mediaType, season, episode, titleFallback) {
+  dbg("Starting Dhakaflix streams fetching for TMDB ID:", tmdbId, "| MediaType:", mediaType, "| Title Fallback:", titleFallback);
   var isSeriesType = mediaType === "tv" || mediaType === "series";
   var serverType = isSeriesType ? "series" : "movie";
   var server = SERVERS[serverType];
@@ -267,8 +310,9 @@ function getStreams(tmdbId, mediaType, season, episode) {
       : Promise.resolve("");
 
     return epPromise.then(function(epTitle) {
+      var resolvedTitle = tmdbData.title || titleFallback || (isSeriesType ? "Series" : "Movie");
       var meta = {
-        title: tmdbData.title || "Movie",
+        title: resolvedTitle,
         year: tmdbData.year || "",
         season: season,
         episode: episode,
@@ -294,18 +338,58 @@ function getStreams(tmdbId, mediaType, season, episode) {
         return searchServer(term, server).then(function(results) {
           if (results && results.length > 0) {
             dbg("Found matched results for term:", term, "Processing streams...");
-            var streams = [];
+            
             if (!isSeriesType) {
-              streams = findMovies(results, meta);
+              var streams = findMovies(results, meta);
+              if (streams.length > 0) {
+                // Sort by quality score
+                streams.sort(function(a, b) {
+                  return scoreQuality(b.quality) - scoreQuality(a.quality);
+                });
+                return streams;
+              }
             } else {
-              streams = findSeries(results, meta, season || 1, episode || 1);
-            }
-            if (streams.length > 0) {
-              // Sort by quality score
-              streams.sort(function(a, b) {
-                return scoreQuality(b.quality) - scoreQuality(a.quality);
+              // For series: try to find a folder matching the series name
+              var matchedFolder = results.find(function(item) {
+                return item.href.endsWith("/") && (titlesMatch(item.name, meta.title) || titlesMatch(item.href, meta.title));
               });
-              return streams;
+
+              if (matchedFolder) {
+                dbg("Found matched series folder:", matchedFolder.href, matchedFolder.name);
+                // Perform subfolder search inside the series directory for movies / media files
+                return Promise.all([
+                  searchSubfolder("mkv", server, matchedFolder.href),
+                  searchSubfolder("mp4", server, matchedFolder.href)
+                ]).then(function(subResults) {
+                  var combined = (subResults[0] || []).concat(subResults[1] || []);
+                  dbg("Total files found inside series folder:", combined.length);
+                  var streams = findSeries(combined, meta, season || 1, episode || 1, true);
+                  if (streams.length > 0) {
+                    streams.sort(function(a, b) {
+                      return scoreQuality(b.quality) - scoreQuality(a.quality);
+                    });
+                    return streams;
+                  }
+                  // Fallback to checking directly in parent results
+                  var fallbackStreams = findSeries(results, meta, season || 1, episode || 1, false);
+                  if (fallbackStreams.length > 0) {
+                    fallbackStreams.sort(function(a, b) {
+                      return scoreQuality(b.quality) - scoreQuality(a.quality);
+                    });
+                    return fallbackStreams;
+                  }
+                  return executeTermSearch(index + 1);
+                });
+              } else {
+                // No matched folder, look for episode files in general results directly
+                var streams = findSeries(results, meta, season || 1, episode || 1, false);
+                if (streams.length > 0) {
+                  streams.sort(function(a, b) {
+                    return scoreQuality(b.quality) - scoreQuality(a.quality);
+                  });
+                  return streams;
+                }
+              }
             }
           }
           // Fall back to next search term
