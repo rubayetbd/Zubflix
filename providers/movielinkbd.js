@@ -195,6 +195,21 @@ function buildStream(label, finalUrl, finalQuality, streamHeaders, size, tech, l
   };
 }
 
+function padZero(num) {
+  var n = parseInt(num, 10);
+  if (isNaN(n)) return num;
+  return n < 10 ? "0" + n : String(n);
+}
+
+function extractSize(text) {
+  var t = String(text || "");
+  var match = t.match(/(\d+(?:\.\d+)?\s*(?:GB|MB|KB|gb|mb|kb))/i);
+  if (match) {
+    return match[1].toUpperCase();
+  }
+  return "";
+}
+
 function buildMeta(meta, label, quality, size, tech, langHint) {
   var cleanedLabel = cleanLabelText(label);
   var lang = inferLang((langHint || "") + " " + cleanedLabel);
@@ -211,12 +226,37 @@ function buildMeta(meta, label, quality, size, tech, langHint) {
     line1 = "🎬 " + displayTitle + year;
   }
   
+  if (!size) {
+    size = extractSize(label);
+  }
+  
   var qIcon = (quality.indexOf('2160') !== -1 || quality.indexOf('4K') !== -1) ? '💎' : '📺';
   var line2 = qIcon + " " + quality + " | 🌍 " + lang + (size ? " | 💾 " + size : "");
   var line3 = "🎞️ Direct Stream | ℹ️ " + (tech || "WEB-DL");
 
+  var streamTitle = "";
+  if (meta && meta.title) {
+    streamTitle = meta.title;
+    if (isSeries) {
+      streamTitle += " S" + padZero(meta.season) + "E" + padZero(meta.episode);
+    }
+  }
+
+  var nameParts = ["MovieLinkBD"];
+  if (streamTitle) {
+    nameParts.push(streamTitle);
+  }
+  nameParts.push(quality);
+  if (size) {
+    nameParts.push(size);
+  }
+  if (tech) {
+    nameParts.push(tech);
+  }
+  var finalName = nameParts.join(" | ");
+
   return {
-    name: "MovieLinkBD | " + quality,
+    name: finalName,
     title: line1 + "\n" + line2 + "\n" + line3
   };
 }
