@@ -16,6 +16,19 @@
       "contentLanguage": ["en", "bn"]
     },
     {
+      "id": "icc_ftp",
+      "name": "BDIX-IccFtp 🇧🇩",
+      "description": "High-speed BDIX FTP streams for movies and TV shows",
+      "version": "1.0.0",
+      "author": "Nuvio Team",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/icc_ftp.js",
+      "enabled": true,
+      "formats": ["mp4", "mkv"],
+      "logo": "https://i.postimg.cc/TwYK26jn/vegamovies.png",
+      "contentLanguage": ["en", "bn"]
+    },
+    {
       "id": "4khdhub",
       "name": "4KHDHub",
       "description": "4KHDHub direct links",
