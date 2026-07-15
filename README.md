@@ -1,22 +1,6 @@
-# Nuvio TV Scraper Plugins
+# Zubflix - Scraper Plugin
 
 A collection of high-performance, compatible scraper plugins designed for the **Nuvio Android TV Application** media engine. These plugins are built using high-performance, sandboxed ES5 JavaScript to seamlessly resolve high-quality video streaming links, mirror URLs, and high-speed cloud drive nodes.
-
----
-
-## 🚀 Features
-
-- **MovieLinkBD Scraper (Premium)**: 
-  - Fully supports both **Movies** and **TV Shows** (Web Series).
-  - Dynamically resolves multiple qualities (`2160p/4K`, `1080p`, `720p`, `480p`, `360p`).
-  - Features intelligent host routing with high-priority support for **Fast R2 Cloud**, **Direct Mom**, **Instant Cloud**, and **Direct Open** storage networks.
-  - Robust TMDB metadata extraction and fallback link-matching algorithms.
-- **4KHDHub Scraper**:
-  - High-speed direct downloads and multiple CDN mirror support (Maverick, Odyssey, Fukggl).
-  - Automatic stream deduplication and quality routing.
-- **VegaMovies Scraper**:
-  - Premium high-quality dual-audio and multi-resolution direct link resolver.
-- **Resilient Fallback Resolvers**: Integrated silent failure handling and dynamic domain resolution to keep links active even when principal web addresses undergo registrar updates.
 
 ---
 
@@ -31,44 +15,7 @@ https://raw.githubusercontent.com/<YOUR_GITHUB_USERNAME>/<YOUR_REPO_NAME>/main/m
 ```
 
 ### Option 2: Self-Hosting Configuration
-If you prefer hosting the scrapers on your own server or local network, copy your `manifest.json` and host it alongside the contents of the `/providers` folder:
-
-```json
-{
-  "name": "Nuvio-TV",
-  "version": "1.0.0",
-  "scrapers": [
-    {
-      "id": "movielinkbd",
-      "name": "MovieLinkBD",
-      "description": "Fast cloud drives and watch mirrors from MovieLinkBD",
-      "version": "1.0.0",
-      "author": "Nuvio Team",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/movielinkbd.js",
-      "enabled": true,
-      "formats": ["mp4", "mkv", "m3u8"],
-      "logo": "https://i.postimg.cc/mryRTf0R/hdhub4u.png",
-      "contentLanguage": ["en", "bn"]
-    },
-    {
-      "id": "4khdhub",
-      "name": "4KHDHub",
-      "description": "4KHDHub direct links",
-      "version": "1.0.0",
-      "author": "Nuvio Team",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/4khdhub.js",
-      "enabled": true,
-      "formats": ["mp4", "m3u8"],
-      "logo": "https://i.postimg.cc/DZpW6Xfb/4khdhub.png",
-      "contentLanguage": ["en"]
-    }
-  ]
-}
-```
-
----
+If you prefer hosting the scrapers on your own server or local network, copy your `manifest.json` and host it alongside the contents of the `/providers` folder
 
 ## 🛠️ Architecture and Technical Design
 
