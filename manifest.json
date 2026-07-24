@@ -3,6 +3,19 @@
   "version": "1.0.0",
   "scrapers": [
     {
+      "id": "ctgmovie",
+      "name": "BDIX-CTGMovies 🇧🇩",
+      "description": "Direct BDIX and Cockpit API streams from CTGMovies",
+      "version": "1.0.0",
+      "author": "Nuvio Team",
+      "supportedTypes": ["movie", "tv", "anime"],
+      "filename": "providers/ctgmovie.js",
+      "enabled": true,
+      "formats": ["mkv", "mp4", "m3u8"],
+      "logo": "https://i.postimg.cc/TwYK26jn/vegamovies.png",
+      "contentLanguage": ["en", "hi", "bn"]
+    },
+    {
       "id": "icc_ftp",
       "name": "BDIX-IccFtp 🇧🇩",
       "description": "High-speed BDIX FTP streams for movies and TV shows",
@@ -43,7 +56,7 @@
     },
     {
       "id": "movielinkbd",
-      "name": "MovieLinkBD",
+      "name": "MovieLinkBD 🔗",
       "description": "Fast cloud drives and watch mirrors from MovieLinkBD",
       "version": "1.0.0",
       "author": "Nuvio Team",
@@ -53,19 +66,6 @@
       "formats": ["mp4", "mkv", "m3u8"],
       "logo": "https://i.postimg.cc/mryRTf0R/hdhub4u.png",
       "contentLanguage": ["en", "bn"]
-    },
-    {
-      "id": "4khdhub",
-      "name": "4KHDHub",
-      "description": "4KHDHub direct links",
-      "version": "1.0.0",
-      "author": "Nuvio Team",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/4khdhub.js",
-      "enabled": true,
-      "formats": ["mp4", "m3u8"],
-      "logo": "https://i.postimg.cc/DZpW6Xfb/4khdhub.png",
-      "contentLanguage": ["en"]
     }
   ]
 }
