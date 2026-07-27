@@ -3,6 +3,32 @@
   "version": "1.0.0",
   "scrapers": [
     {
+      "id": "vegamovies",
+      "name": "VegaMovies",
+      "description": "VegaMovies streaming with high-quality direct links",
+      "version": "2.0",
+      "author": "piratezoro9",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/vegamovies.js",
+      "enabled": true,
+      "formats": ["mp4", "mkv"],
+      "logo": "https://i.postimg.cc/TwYK26jn/vegamovies.png",
+      "contentLanguage": ["en", "hi"]
+    },
+    {
+      "id": "moviebox",
+      "name": "MovieBox",
+      "description": "High quality streams dynamically from MovieBox WeFeed API",
+      "version": "2.0.0",
+      "author": "ZubFlix / Nuvio Team",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/moviebox.js",
+      "enabled": true,
+      "formats": ["mp4", "m3u8", "mpd"],
+      "logo": "https://i.postimg.cc/DZpW6Xfb/4khdhub.png",
+      "contentLanguage": ["en", "hi"]
+    },
+    {
       "id": "ctgmovie",
       "name": "BDIX-CTGMovies 🇧🇩",
       "description": "Direct BDIX and Cockpit API streams from CTGMovies",
@@ -14,6 +40,19 @@
       "formats": ["mkv", "mp4", "m3u8"],
       "logo": "https://i.postimg.cc/TwYK26jn/vegamovies.png",
       "contentLanguage": ["en", "hi", "bn"]
+    },
+    {
+      "id": "movielinkbd",
+      "name": "MovieLinkBD 🔗",
+      "description": "Fast cloud drives and watch mirrors from MovieLinkBD",
+      "version": "1.0.0",
+      "author": "Nuvio Team",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/movielinkbd.js",
+      "enabled": true,
+      "formats": ["mp4", "mkv", "m3u8"],
+      "logo": "https://i.postimg.cc/mryRTf0R/hdhub4u.png",
+      "contentLanguage": ["en", "bn"]
     },
     {
       "id": "icc_ftp",
@@ -52,19 +91,6 @@
       "enabled": true,
       "formats": ["mp4", "mkv"],
       "logo": "https://i.postimg.cc/TwYK26jn/vegamovies.png",
-      "contentLanguage": ["en", "bn"]
-    },
-    {
-      "id": "movielinkbd",
-      "name": "MovieLinkBD 🔗",
-      "description": "Fast cloud drives and watch mirrors from MovieLinkBD",
-      "version": "1.0.0",
-      "author": "Nuvio Team",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/movielinkbd.js",
-      "enabled": true,
-      "formats": ["mp4", "mkv", "m3u8"],
-      "logo": "https://i.postimg.cc/mryRTf0R/hdhub4u.png",
       "contentLanguage": ["en", "bn"]
     }
   ]
