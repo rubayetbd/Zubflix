@@ -3,19 +3,6 @@
   "version": "1.0.0",
   "scrapers": [
     {
-      "id": "castletv",
-      "name": "CastleTV",
-      "description": "Multi-audio high speed direct streams from Castle Media API",
-      "version": "1.0.0",
-      "author": "Nuvio Team",
-      "supportedTypes": ["movie", "tv"],
-      "filename": "providers/castletv.js",
-      "enabled": true,
-      "formats": ["mp4", "m3u8"],
-      "logo": "https://i.postimg.cc/mryRTf0R/hdhub4u.png",
-      "contentLanguage": ["en", "hi"]
-    },
-    {
       "id": "moviebox",
       "name": "MovieBox",
       "description": "High quality streams dynamically from MovieBox WeFeed API",
@@ -39,6 +26,19 @@
       "enabled": true,
       "formats": ["mp4", "mkv"],
       "logo": "https://i.postimg.cc/TwYK26jn/vegamovies.png",
+      "contentLanguage": ["en", "hi"]
+    },
+    {
+      "id": "castletv",
+      "name": "CastleTV",
+      "description": "Multi-audio high speed direct streams from Castle Media API",
+      "version": "1.0.0",
+      "author": "Nuvio Team",
+      "supportedTypes": ["movie", "tv"],
+      "filename": "providers/castletv.js",
+      "enabled": true,
+      "formats": ["mp4", "m3u8"],
+      "logo": "https://i.postimg.cc/mryRTf0R/hdhub4u.png",
       "contentLanguage": ["en", "hi"]
     },
     {
